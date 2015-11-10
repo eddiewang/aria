@@ -22,7 +22,7 @@ function handleQueue() {
 					'msg' : data.msg
 				});
 			} else {
-				showUserRow({
+				showUserRow(data.userId==1, {
 					'msg' : data.msg
 				});
 			}
@@ -259,19 +259,24 @@ function showAIRow(data) {
 
 
 
-function showUserRow(data) {
+function showUserRow(isMe, data) {
 
 	var obj = $("#chat_id_" + chatID)[0];
 	var dest = $("#message_input")[0];
 
-	userType(obj, 0, data.msg, dest, function() {
-		pressEnter();
-		
+	if (isMe) {
+		userType(obj, 0, data.msg, dest, function() {
+			pressEnter();
+			handleQueue();
+			var body = $("#message_field");
+			body.animate({scrollTop:body[0].scrollHeight}, 500);
+		});
+	} else {
+		addMsgNow(data.msg);
 		handleQueue();
-		
 		var body = $("#message_field");
 		body.animate({scrollTop:body[0].scrollHeight}, 500);
-	});
+	}
 	
 	chatID += 1;
 }
@@ -290,10 +295,14 @@ function userType(obj, i, str, dest, callback) {
 function pressEnter() {
 	var val = $("#message_input").val();
 	$("#message_input").val("");
+	addMsgNow(val);
+}
+
+function addMsgNow(msg) {
 
     var str = '<div class="row">';
     str += '<div class="text user">';
-    str += '<div class="comment">' + val + '</div>';
+    str += '<div class="comment">' + msg + '</div>';
     str += '</div>';
 	str += '</div>';
 

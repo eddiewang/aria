@@ -97,7 +97,7 @@ var script = {
 		},
 		{
 			'msg' : 'Meh1',
-			'userId' : 0,
+			'userId' : 2,
 			'delay' : 1000
 		},
 		{
