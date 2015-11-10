@@ -37,7 +37,7 @@
   text-transform: uppercase;
 }
 
-.begin {
+#facebooklogin {
   opacity: 0;
 }
 /* Remove these to get rid of the spinner */

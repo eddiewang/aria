@@ -27,22 +27,31 @@
     <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="icon" type="image/png" href="images/favicon.png">
+	
+    <!-- JS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/socket.io-1.3.7.js"></script>
     <script src="js/transit.js"></script>
     <script src="js/connection.js"></script>
     <script src="js/typed.js"></script>
     <script src='js/nprogress.js'></script>
+	<script src="./js/siriwave.js"></script>
 </head>
 
 <body>
+
+
     <div id="container-classic" class="containerX">
         <canvas width="259" height="50"></canvas>
     </div>
-    <script src="./SiriWaveJS_files/siriwave.js"></script>
-    <div id="facebooklogin" style="z-index:10;position:relative" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
-    <div id="status">
-    </div>
+    
+	
+	
+
+	
+	
+
     <div id="login" class="login">
         <div class="row">
             <div class="text bot">
@@ -57,31 +66,38 @@
             </div>
         </div>
     </div>
+	
+	
     <script>
-    $(function() {
-        $(".splash").typed({
-            strings: ["<strong>Hi. My name is Aria</strong>,  <br> <br> ^500 I was made to be your personal travel agent.<br> ^300 I use artificial intelligence ^300 to help build your perfect adventure. <br> <br> ^500 <strong>Let's begin.</strong>"],
-            typeSpeed: -5,
-            loop: false,
-            contentType: 'html',
-            showCursor: false,
-            callback: function() {
-                $('.botIcon:first').addClass('animated flash');
-                setTimeout(function() {
-                    $('.begin').animate({
-                        opacity: 1
-                    }, 1000);
-                }, 200);
-            },
-        });
-    });
+		$(function() {
+			$(".splash").typed({
+				strings: ["<strong>Hi. My name is Aria</strong>,  <br> <br> ^500 I was made to be your personal travel agent.<br> ^300 I use artificial intelligence ^300 to help build your perfect adventure. <br> <br> ^500 <strong>Let's begin.</strong>"],
+				typeSpeed: -5,
+				loop: false,
+				contentType: 'html',
+				showCursor: false,
+				callback: function() {
+					$('#login .botIcon').addClass('animated flash');
+					setTimeout(function() {
+						$('#facebooklogin').animate({
+							opacity: 1
+						}, 1000);
+					}, 1000);
+				},
+			});
+		});
     </script>
+	
     <div class="header-img">
         <!-- <img src="images/header-large.png" class="header"></img> -->
     </div>
+	
+	
     <div class="deals">
 
     </div>
+	
+	
     <div id="message_field" class="container content">
         <div class="row">
             <div class="text bot">
@@ -94,7 +110,8 @@
             <input id="send_message" type="submit" value="Submit">
         </div>
     </div>
-    </div>
+	
+
     <script src="js/facebook.js"></script>
     <script src="js/script.js"></script>
     <!-- End Document
