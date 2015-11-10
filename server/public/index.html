@@ -36,7 +36,7 @@
     <script src="js/connection.js"></script>
     <script src="js/typed.js"></script>
     <script src='js/nprogress.js'></script>
-	<script src="./js/siriwave.js"></script>
+	<script src='js/jscroll.js'></script>
 </head>
 
 <body>
@@ -45,14 +45,28 @@
     <div id="container-classic" class="containerX">
         <canvas width="259" height="50"></canvas>
     </div>
-    
+    <script src="./js/siriwave.js"></script>
 	
-	
+	<style>
+		.friend_icon {
+			display:inline-block;
+			border-radius:25px;
+			border:2px solid black;
+			width:50px;
+			height:50px;
+			background-size: 50px 50px;
+			cursor:pointer;
+		}
+		.friend_icon.selected {
+			border:2px solid cyan;
+		}
+	</style>
 
 	
 	
 
     <div id="login" class="login">
+	
         <div class="row">
             <div class="text bot">
                 <img src="images/bot-icon.png" class="icon botIcon"></img>
@@ -60,28 +74,37 @@
                     <div class="active">
                         <p class="splash"></p>
                     </div>
-                    <div id="facebooklogin" class="fb-login begin" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false">
+                    <div id="facebooklogin" style="display:none;" class="fb-login begin" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false">
                         <div class="image-wrapper begin"><img src="images/fb-icon.png"></div>Login with Facebook</div>
                 </div>
             </div>
         </div>
+		<div id="friends_picker" style="display:none;">
+			<h1>Select friends from facebook</h1>
+			<div class="friend_icon" title="Jason Du" style="background-image:url('./images/icon1.jpg');">
+			</div>
+			<div class="friend_icon" title="Eddie Wang" style="background-image:url('./images/icon2.jpg');">
+			</div>
+			<br/><br/>
+			<button id="enter_chat">Enter Chat</button>
+		</div>
     </div>
 	
 	
     <script>
 		$(function() {
+			// "<strong>Hi. My name is Aria</strong>,  <br> <br> ^500 I was made to be your personal travel agent.<br> ^300 I use artificial intelligence ^300 to help build your perfect adventure. <br> <br> ^500 <strong>Let's begin.</strong>"
+		
 			$(".splash").typed({
-				strings: ["<strong>Hi. My name is Aria</strong>,  <br> <br> ^500 I was made to be your personal travel agent.<br> ^300 I use artificial intelligence ^300 to help build your perfect adventure. <br> <br> ^500 <strong>Let's begin.</strong>"],
-				typeSpeed: -5,
+				strings: ["Hi"],
+				typeSpeed: 1,
 				loop: false,
 				contentType: 'html',
 				showCursor: false,
 				callback: function() {
 					$('#login .botIcon').addClass('animated flash');
 					setTimeout(function() {
-						$('#facebooklogin').animate({
-							opacity: 1
-						}, 1000);
+						$('#facebooklogin').fadeIn();
 					}, 1000);
 				},
 			});
@@ -97,22 +120,27 @@
 
     </div>
 	
+
 	
     <div id="message_field" class="container content">
+	
+		<!--
         <div class="row">
             <div class="text bot">
                 <img src="images/bot-icon.png" class="icon botIcon"></img>
                 <div id="name" class="comment"></div>
             </div>
         </div>
+		-->
         <div class="send-form">
             <input id="message_input" type="text" name="message">
             <input id="send_message" type="submit" value="Submit">
         </div>
+		
     </div>
 	
 
-    <script src="js/facebook.js"></script>
+    <!--<script src="js/facebook.js"></script>-->
     <script src="js/script.js"></script>
     <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
