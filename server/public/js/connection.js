@@ -4,10 +4,12 @@ $(document).ready(function() {
 
 });
 
-var lowerBound = 0, upperBound = 500;
+var sqlid = 0;
+var curpage = 0;
 var chatID = 0;
 var chatQueue;
 var counterChat = 0;
+var socketObj = null;
 
 function handleQueue() {
 
@@ -21,6 +23,16 @@ function handleQueue() {
 				showAIRow({
 					'msg' : data.msg
 				});
+			} else if (data.userId == -2) {
+				sqlid = data.sqlid;
+				curpage = 0;
+				$("div.deals").html("");
+				
+				socketObj.emit('get_packages', {
+					'sqlid' : sqlid,
+					'page' : curpage
+				});
+				curpage += 1;
 			} else {
 				showUserRow(data.userId==1, {
 					'msg' : data.msg
@@ -54,6 +66,7 @@ function setUpSockets() {
 
 		socket.on('sendChat', function(data){
 			chatQueue = data.data;
+			socketObj = socket;
 			handleQueue();
 		});
 		
@@ -62,7 +75,11 @@ function setUpSockets() {
 		});
 		
 		socket.on('sql_work', function(data) {
-			updatePackages(data);
+			updatePackages(data, true);
+		});
+		
+		socket.on('sql_work_next_page', function(data) {
+			updatePackages(data, false);
 		});
 	});
 	
@@ -76,14 +93,13 @@ function setUpSockets() {
 	$("#enter_chat").click(function() {
 		$("#login").eq(0).fadeOut("slow");
 		socket.emit('getScript', 1);
-		socket.emit('get_packages', 1);
 	});
 }
 
 
 
-function updatePackages(data) {
-	var max_limit = 1000;
+function updatePackages(data, page_zero) {
+	var max_limit = 130;
 	
 	for(var i=0; i<data.length; i+=1) {
 		
@@ -175,11 +191,19 @@ function updatePackages(data) {
 		strVar += "        <\/a>";
 
 
-			
 		$("div.deals").append(strVar);
 	}
+	
+	if (page_zero) handleQueue();
 }
 
+function getNextPage() {
+	socketObj.emit('get_packages', {
+		'sqlid' : sqlid,
+		'page' : curpage
+	});
+	curpage += 1;
+}
 
 function formatDate(date) {
 	var hours = date.getHours();
@@ -216,13 +240,16 @@ function showChoices(data) {
 	
 	$("#message_field").append(form);
 	
+	var body = $("#message_field");
+	body.animate({scrollTop:body[0].scrollHeight}, 500);
+	
 	setTimeout(function() {
 		form.find("input").eq(data.answer).prop('checked',true);
 		setTimeout(function() {
-			form.remove();
+			//form.remove();
 			handleQueue();
 		}, 1000);
-	}, 1300);
+	}, 2000);
 }
 
 function showAIRow(data) {
