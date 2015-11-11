@@ -143,10 +143,10 @@
             if (this.stop === true) {
                 return;
             }
-
+            console.log(this.typeSpeed);
             // varying values for setTimeout during typing
             // can't be global since number changes each time loop is executed
-            var humanize = Math.round(Math.random() * (100 - 30)) + this.typeSpeed;
+            var humanize = Math.round(Math.random() * (3)) + this.typeSpeed;
             var self = this;
 
             // ------------- optional ------------- //
@@ -390,6 +390,7 @@
             var $this = $(this),
                 data = $this.data('typed'),
                 options = typeof option == 'object' && option;
+                console.log(options);
             if (!data) $this.data('typed', (data = new Typed(this, options)));
             if (typeof option == 'string') data[option]();
         });
